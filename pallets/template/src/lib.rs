@@ -1,13 +1,12 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-// Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
 
 #[frame_support::pallet]
 pub mod pallet {
     use frame_support::{dispatch::DispatchResultWithPostInfo, pallet_prelude::*};
     use frame_system::pallet_prelude::*;
-    use sp_std::vec::Vec; // Step 3.1 will include this in `Cargo.toml`
+    use sp_std::vec::Vec; 
 
     /// Configure the pallet by specifying the parameters and types on which it depends.
     #[pallet::config]
@@ -23,9 +22,9 @@ pub mod pallet {
     #[pallet::metadata(T::AccountId = "AccountId")]
     #[pallet::generate_deposit(pub(super) fn deposit_event)]
     pub enum Event<T: Config> {
-        /// Event emitted when a proof has been claimed. [who, claim]
+        /// Event emitted when a product is added.
         ProductAdded(T::AccountId, Vec<u8>),
-    	/// Event emitted when a claim is revoked by the owner. [who, claim]
+    	/// Event emitted when location is updated.
         LocationUpdated(Vec<u8>),
     }
     
@@ -35,6 +34,8 @@ pub mod pallet {
             ProductAlreadyExists,
             /// Entered Product doesn't exist.
             NoSuchProduct,
+	    /// Productid doesn't match with the productname.
+	    NoMatchFound,
         }
     
     #[pallet::pallet]
@@ -42,10 +43,8 @@ pub mod pallet {
     pub struct Pallet<T>(_);
     
 	#[pallet::storage] 
-	pub(super) type ProductInformation<T: Config> = StorageMap<_, Blake2_128Concat, Vec<u8>, (Vec<u8>,Vec<u8>,T::AccountId), ValueQuery>;
-	 
-	
-    
+	pub(super) type ProductInformation<T: Config> = StorageMap<_, Blake2_128Concat, Vec<u8>, (Vec<u8>,Vec<u8>,T::AccountId), ValueQuery>;	
+
     #[pallet::hooks]
     impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {}
     
@@ -67,13 +66,13 @@ pub mod pallet {
 			// https://substrate.dev/docs/en/knowledgebase/runtime/origin
 			let sender = ensure_signed(origin)?;
 		
-			// Verify that the specified proof has not already been claimed.         
+			// To check whether given product exists or not.         
 			ensure!(!ProductInformation::<T>::contains_key(&productid), Error::<T>::ProductAlreadyExists);
 
-			// Store the proof with the sender and block number.
+			// Store product value.
 			ProductInformation::<T>::insert(&productid, (&location,&productname,&sender));
 
-			// Emit an event that the claim was created.
+			// Emit an event that store a product information.
 			Self::deposit_event(Event::ProductAdded(sender,productid));
 
 			Ok(().into())
@@ -84,20 +83,22 @@ pub mod pallet {
 			productid: Vec<u8>,
 			location: Vec<u8>,
 			productname: Vec<u8>,
-		) -> DispatchResultWithPostInfo {
+		 ) -> DispatchResultWithPostInfo {
 			// Check that the extrinsic was signed and get the signer.
 			// This function will return an error if the extrinsic is not signed.
 			// https://substrate.dev/docs/en/knowledgebase/runtime/origin
 			
 			let sender = ensure_signed(origin)?;
 
-			// Verify that the specified proof has been claimed.
+			// Verify product exists or not.
 			ensure!(ProductInformation::<T>::contains_key(&productid), Error::<T>::NoSuchProduct);
-			ProductInformation::<T>::remove(&productid);
+			ensure!(ProductInformation::<T>::contains_key(&productname), Error::<T>::NoMatchFound);
+			
+			ProductInformation::<T>::remove(&location);
 
 			ProductInformation::<T>::insert(&productid, (&location,&productname,&sender));
 
-			// Emit an event that the claim was erased.
+			// Emit an event that location is updated.
 			Self::deposit_event(Event::LocationUpdated(location));
 
 			Ok(().into())
