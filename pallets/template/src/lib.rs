@@ -81,8 +81,8 @@ pub mod pallet {
 		fn LocationUpdate(
 			origin: OriginFor<T>,
 			productid: Vec<u8>,
-			location: Vec<u8>,
 			productname: Vec<u8>,
+			location: Vec<u8>,
 		 ) -> DispatchResultWithPostInfo {
 			// Check that the extrinsic was signed and get the signer.
 			// This function will return an error if the extrinsic is not signed.
