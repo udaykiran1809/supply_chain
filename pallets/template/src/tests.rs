@@ -2,15 +2,20 @@ use crate::{mock::*, Error};
 use frame_support::{assert_noop, assert_ok};
 
 #[test]
-fn it_works_for_default_value() {
+fn it_stores_correctly(){
 	new_test_ext().execute_with(|| {
 		// Dispatch a signed extrinsic.
-		assert_ok!(TemplateModule::do_something(Origin::signed(1), 42));
+		assert_ok!(TemplateModule::add_product(Origin::signed(1),1234,"DELL","Hyderabad"));
 		// Read pallet storage and assert an expected result.
-		assert_eq!(TemplateModule::something(), Some(42));
+		assert_eq!(TemplateModule::ProductInformation(), Some(1234,"DELL","Hyderabad"));
+		// Dispatch a signed extrinsic.
+		assert_ok!(TemplateModule::LocationUpdate(Origin::signed(1),1234,"DELL","Bangalore"));
+		// Read pallet storage and assert an expected result.
+		assert_eq!(TemplateModule::ProductInformation(), Some(1234,"DELL","Bangalore"));
 	});
 }
 
+/*
 #[test]
 fn correct_error_for_none_value() {
 	new_test_ext().execute_with(|| {
@@ -18,3 +23,4 @@ fn correct_error_for_none_value() {
 		assert_noop!(TemplateModule::cause_error(Origin::signed(1)), Error::<Test>::NoneValue);
 	});
 }
+*/
