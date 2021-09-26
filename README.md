@@ -1,3 +1,25 @@
+# Supply Chain
+
+<img src="https://cdn.corporatefinanceinstitute.com/assets/supply-chain.jpeg" width=350>
+
+A supply chain is a network between a company and its suppliers to produce and distribute a specific product to the final buyer.
+
+# BlockChain
+
+<img src="https://www.visiott.com/wp-content/uploads/2021/03/BlockChain_System.jpg">
+
+Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system.
+
+# Why to use Blockchain technology for supply chain?
+
+Blockchain technology coupled with the ability to program business logic with the use of smart contracts enables the following:
+
+* Transparency into the provenance of consumer goods— from the source point to end consumption
+* Accurate asset tracking
+* Enhanced licensing of services, products, and software 
+
+Blockchain has the potential to drive cost-saving efficiencies and to enhance the consumer experience through traceability, transparency, and tradeability. 
+
 # Substrate Node Template
 
 
@@ -184,3 +206,21 @@ by appending your own. A few useful ones are as follow.
 # Check whether the code is compilable
 ./scripts/docker_run.sh cargo check
 ```
+# Supplychain on Blockchain using Substrate Framework
+
+This project consist of two functions, they are as following:
+* Create an item on the blockchain which consist of Product_id, Product_name and Initial Location.
+* Update the current location of the item.
+
+# Screenshots
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/1.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/2.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/3.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/4.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/5.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/6.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/7.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/8.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/9.png">
+<img src="https://github.com/udaykiran1809/supply_chain/blob/main/images/10.png">
+
