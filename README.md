@@ -6,7 +6,7 @@ A supply chain is a network between a company and its suppliers to produce and d
 
 # BlockChain
 
-<img src="https://www.visiott.com/wp-content/uploads/2021/03/BlockChain_System.jpg">
+![BlockChain_System](https://user-images.githubusercontent.com/91145779/203275529-70c5c926-4cd2-4847-a38a-59f5cbf15ac9.jpg)
 
 Blockchain is a system of recording information in a way that makes it difficult or impossible to change, hack, or cheat the system.
 
